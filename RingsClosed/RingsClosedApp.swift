@@ -1,17 +1,15 @@
-//
-//  RingsClosedApp.swift
-//  RingsClosed
-//
-//  Created by Nick Kohrn on 5/21/24.
-//
-
+import AppDelegateFeature
+import AppFeature
 import SwiftUI
 
 @main
 struct RingsClosedApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppFeatureView(store: appDelegate.store)
+                .preferredColorScheme(.dark)
         }
     }
 }

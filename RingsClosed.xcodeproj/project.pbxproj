@@ -7,36 +7,115 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F942D9632BFD15EE001BF0ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F942D9622BFD15EE001BF0ED /* AppDelegate.swift */; };
+		F942D9662BFD16B1001BF0ED /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = F942D9652BFD16B1001BF0ED /* AppFeature */; };
+		F942D9682BFD1B07001BF0ED /* AppDelegateFeature in Frameworks */ = {isa = PBXBuildFile; productRef = F942D9672BFD1B07001BF0ED /* AppDelegateFeature */; };
+		F942D96F2BFD9392001BF0ED /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F942D96E2BFD9392001BF0ED /* WidgetKit.framework */; };
+		F942D9712BFD9392001BF0ED /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F942D9702BFD9392001BF0ED /* SwiftUI.framework */; };
+		F942D9742BFD9392001BF0ED /* RingsClosedWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F942D9732BFD9392001BF0ED /* RingsClosedWidgetBundle.swift */; };
+		F942D9762BFD9392001BF0ED /* RingsClosedWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F942D9752BFD9392001BF0ED /* RingsClosedWidget.swift */; };
+		F942D9782BFD9393001BF0ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F942D9772BFD9393001BF0ED /* Assets.xcassets */; };
+		F942D97C2BFD9393001BF0ED /* RingsClosedWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F942D96D2BFD9392001BF0ED /* RingsClosedWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F942D9822BFD93CB001BF0ED /* LoggingClient in Frameworks */ = {isa = PBXBuildFile; productRef = F942D9812BFD93CB001BF0ED /* LoggingClient */; };
 		F9DC88982BFCD9B6000A671F /* RingsClosedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DC88972BFCD9B6000A671F /* RingsClosedApp.swift */; };
-		F9DC889A2BFCD9B6000A671F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DC88992BFCD9B6000A671F /* ContentView.swift */; };
 		F9DC889C2BFCD9B7000A671F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9DC889B2BFCD9B7000A671F /* Assets.xcassets */; };
 		F9DC889F2BFCD9B7000A671F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9DC889E2BFCD9B7000A671F /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F942D97A2BFD9393001BF0ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9DC888C2BFCD9B6000A671F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F942D96C2BFD9392001BF0ED;
+			remoteInfo = RingsClosedWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F942D97D2BFD9393001BF0ED /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F942D97C2BFD9393001BF0ED /* RingsClosedWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		F942D9622BFD15EE001BF0ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F942D96D2BFD9392001BF0ED /* RingsClosedWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RingsClosedWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F942D96E2BFD9392001BF0ED /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		F942D9702BFD9392001BF0ED /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		F942D9732BFD9392001BF0ED /* RingsClosedWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingsClosedWidgetBundle.swift; sourceTree = "<group>"; };
+		F942D9752BFD9392001BF0ED /* RingsClosedWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingsClosedWidget.swift; sourceTree = "<group>"; };
+		F942D9772BFD9393001BF0ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F942D9792BFD9393001BF0ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F942D9852BFD9770001BF0ED /* RingsClosed.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RingsClosed.entitlements; sourceTree = "<group>"; };
+		F942D9862BFD9777001BF0ED /* RingsClosedWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RingsClosedWidgetExtension.entitlements; sourceTree = "<group>"; };
+		F9C59FC42BFD0DD400256341 /* RingsClosedCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RingsClosedCore; sourceTree = "<group>"; };
 		F9DC88942BFCD9B6000A671F /* RingsClosed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RingsClosed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9DC88972BFCD9B6000A671F /* RingsClosedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingsClosedApp.swift; sourceTree = "<group>"; };
-		F9DC88992BFCD9B6000A671F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F9DC889B2BFCD9B7000A671F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F9DC889E2BFCD9B7000A671F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F942D96A2BFD9392001BF0ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F942D9712BFD9392001BF0ED /* SwiftUI.framework in Frameworks */,
+				F942D9822BFD93CB001BF0ED /* LoggingClient in Frameworks */,
+				F942D96F2BFD9392001BF0ED /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9DC88912BFCD9B6000A671F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F942D9682BFD1B07001BF0ED /* AppDelegateFeature in Frameworks */,
+				F942D9662BFD16B1001BF0ED /* AppFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F942D9642BFD16B1001BF0ED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F942D96E2BFD9392001BF0ED /* WidgetKit.framework */,
+				F942D9702BFD9392001BF0ED /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F942D9722BFD9392001BF0ED /* RingsClosedWidget */ = {
+			isa = PBXGroup;
+			children = (
+				F942D9732BFD9392001BF0ED /* RingsClosedWidgetBundle.swift */,
+				F942D9752BFD9392001BF0ED /* RingsClosedWidget.swift */,
+				F942D9772BFD9393001BF0ED /* Assets.xcassets */,
+				F942D9792BFD9393001BF0ED /* Info.plist */,
+			);
+			path = RingsClosedWidget;
+			sourceTree = "<group>";
+		};
 		F9DC888B2BFCD9B6000A671F = {
 			isa = PBXGroup;
 			children = (
+				F942D9862BFD9777001BF0ED /* RingsClosedWidgetExtension.entitlements */,
+				F9C59FC42BFD0DD400256341 /* RingsClosedCore */,
 				F9DC88962BFCD9B6000A671F /* RingsClosed */,
+				F942D9722BFD9392001BF0ED /* RingsClosedWidget */,
 				F9DC88952BFCD9B6000A671F /* Products */,
+				F942D9642BFD16B1001BF0ED /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -44,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				F9DC88942BFCD9B6000A671F /* RingsClosed.app */,
+				F942D96D2BFD9392001BF0ED /* RingsClosedWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -51,8 +131,9 @@
 		F9DC88962BFCD9B6000A671F /* RingsClosed */ = {
 			isa = PBXGroup;
 			children = (
+				F942D9852BFD9770001BF0ED /* RingsClosed.entitlements */,
+				F942D9622BFD15EE001BF0ED /* AppDelegate.swift */,
 				F9DC88972BFCD9B6000A671F /* RingsClosedApp.swift */,
-				F9DC88992BFCD9B6000A671F /* ContentView.swift */,
 				F9DC889B2BFCD9B7000A671F /* Assets.xcassets */,
 				F9DC889D2BFCD9B7000A671F /* Preview Content */,
 			);
@@ -70,6 +151,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F942D96C2BFD9392001BF0ED /* RingsClosedWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F942D9802BFD9393001BF0ED /* Build configuration list for PBXNativeTarget "RingsClosedWidgetExtension" */;
+			buildPhases = (
+				F942D9692BFD9392001BF0ED /* Sources */,
+				F942D96A2BFD9392001BF0ED /* Frameworks */,
+				F942D96B2BFD9392001BF0ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RingsClosedWidgetExtension;
+			packageProductDependencies = (
+				F942D9812BFD93CB001BF0ED /* LoggingClient */,
+			);
+			productName = RingsClosedWidgetExtension;
+			productReference = F942D96D2BFD9392001BF0ED /* RingsClosedWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		F9DC88932BFCD9B6000A671F /* RingsClosed */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F9DC88A22BFCD9B7000A671F /* Build configuration list for PBXNativeTarget "RingsClosed" */;
@@ -77,12 +178,18 @@
 				F9DC88902BFCD9B6000A671F /* Sources */,
 				F9DC88912BFCD9B6000A671F /* Frameworks */,
 				F9DC88922BFCD9B6000A671F /* Resources */,
+				F942D97D2BFD9393001BF0ED /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F942D97B2BFD9393001BF0ED /* PBXTargetDependency */,
 			);
 			name = RingsClosed;
+			packageProductDependencies = (
+				F942D9652BFD16B1001BF0ED /* AppFeature */,
+				F942D9672BFD1B07001BF0ED /* AppDelegateFeature */,
+			);
 			productName = RingsClosed;
 			productReference = F9DC88942BFCD9B6000A671F /* RingsClosed.app */;
 			productType = "com.apple.product-type.application";
@@ -97,6 +204,9 @@
 				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
+					F942D96C2BFD9392001BF0ED = {
+						CreatedOnToolsVersion = 15.4;
+					};
 					F9DC88932BFCD9B6000A671F = {
 						CreatedOnToolsVersion = 15.4;
 					};
@@ -116,11 +226,20 @@
 			projectRoot = "";
 			targets = (
 				F9DC88932BFCD9B6000A671F /* RingsClosed */,
+				F942D96C2BFD9392001BF0ED /* RingsClosedWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F942D96B2BFD9392001BF0ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F942D9782BFD9393001BF0ED /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9DC88922BFCD9B6000A671F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -133,18 +252,91 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F942D9692BFD9392001BF0ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F942D9742BFD9392001BF0ED /* RingsClosedWidgetBundle.swift in Sources */,
+				F942D9762BFD9392001BF0ED /* RingsClosedWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9DC88902BFCD9B6000A671F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9DC889A2BFCD9B6000A671F /* ContentView.swift in Sources */,
+				F942D9632BFD15EE001BF0ED /* AppDelegate.swift in Sources */,
 				F9DC88982BFCD9B6000A671F /* RingsClosedApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F942D97B2BFD9393001BF0ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F942D96C2BFD9392001BF0ED /* RingsClosedWidgetExtension */;
+			targetProxy = F942D97A2BFD9393001BF0ED /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		F942D97E2BFD9393001BF0ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = RingsClosedWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K6D967URM5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RingsClosedWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RingsClosedWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryankohrn.RingsClosed.RingsClosedWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F942D97F2BFD9393001BF0ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = RingsClosedWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K6D967URM5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RingsClosedWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RingsClosedWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryankohrn.RingsClosed.RingsClosedWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F9DC88A02BFCD9B7000A671F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -267,8 +459,10 @@
 		F9DC88A32BFCD9B7000A671F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RingsClosed/RingsClosed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RingsClosed/Preview Content\"";
@@ -296,8 +490,10 @@
 		F9DC88A42BFCD9B7000A671F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RingsClosed/RingsClosed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RingsClosed/Preview Content\"";
@@ -325,6 +521,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F942D9802BFD9393001BF0ED /* Build configuration list for PBXNativeTarget "RingsClosedWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F942D97E2BFD9393001BF0ED /* Debug */,
+				F942D97F2BFD9393001BF0ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F9DC888F2BFCD9B6000A671F /* Build configuration list for PBXProject "RingsClosed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -344,6 +549,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F942D9652BFD16B1001BF0ED /* AppFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppFeature;
+		};
+		F942D9672BFD1B07001BF0ED /* AppDelegateFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppDelegateFeature;
+		};
+		F942D9812BFD93CB001BF0ED /* LoggingClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoggingClient;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F9DC888C2BFCD9B6000A671F /* Project object */;
 }
