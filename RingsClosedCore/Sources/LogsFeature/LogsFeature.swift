@@ -3,6 +3,7 @@ import ComposableArchitecture
 import DesignSystem
 import LoggingClient
 import OSLog
+import ShareFeature
 import SwiftUI
 
 // TODO: Make array of log entries an IdentifiedArray
@@ -22,6 +23,7 @@ public struct LogsFeature {
     public enum Destination {
         case confirmationDialog(ConfirmationDialogState<LogsFeature.Action.ConfirmationDialog>)
         case logsFilters(LogsFiltersFeature)
+        case share(ShareFeature)
     }
 
     public struct Section: Equatable, Identifiable {
@@ -45,6 +47,7 @@ public struct LogsFeature {
         @Presents public var destination: Destination.State?
         @Shared public var levelFilters: IdentifiedArrayOf<LoggingLevelFilter>
         public var searchText = ""
+        @Shared(.fileStorage(.shareableLogs)) var shareableLogs = ""
         @Shared public var subsystemFilters: IdentifiedArrayOf<LoggingSubsystemFilter>
 
         public var isSearching: Bool {
@@ -67,6 +70,7 @@ public struct LogsFeature {
         case destination(PresentationAction<Destination.Action>)
         case levelFiltersDidChange(IdentifiedArrayOf<LoggingLevelFilter>)
         case onAppear
+        case processedFormattedLogs(String)
         case searchTextDidChange(String)
         case subsystemFiltersDidChange(IdentifiedArrayOf<LoggingSubsystemFilter>)
         case tappedDeleteButton
@@ -113,6 +117,11 @@ public struct LogsFeature {
                         }
                     )
 
+                case let .processedFormattedLogs(logs):
+                    state.shareableLogs = logs
+                    state.destination = .share(ShareFeature.State(activityItems: [.shareableLogs]))
+                    return .none
+
                 case let .searchTextDidChange(text):
                     state.searchText = text
                     return fetchLogs(state: &state)
@@ -154,8 +163,26 @@ public struct LogsFeature {
                     )
 
                 case .tappedShareButton:
-                    return .none
-
+                    let dateFormatter: DateFormatter = {
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSS"
+                        return dateFormatter
+                    }()
+                    return .run { send in
+                        // Poll immediately
+                        loggingClient.pollImmediately()
+                        // Fetch logs
+                        let logs = try loggingClient.fetchLogs(
+                            predicate: #Predicate<LoggingEntry>{ _ in true },
+                            sortDescriptors: [SortDescriptor(\.date, order: .reverse)]
+                        )
+                        // Format logs as `[String]`
+                        let formattedLogs = logs.map { entry in
+                            "[\(dateFormatter.string(from: entry.date))] [\(entry.category)] [\(entry.level.uppercased())] \(entry.message)"
+                        }.joined(separator: "\n")
+                        // Send formatted logs back
+                        await send(.processedFormattedLogs(formattedLogs))
+                    }
             }
         }
         .ifLet(\.$destination, action: \.destination)
@@ -242,7 +269,7 @@ public struct LogsFeature {
 public struct LogsFeatureView: View {
     private static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss.SSSS"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSS"
         return dateFormatter
     }()
 
@@ -312,6 +339,17 @@ public struct LogsFeatureView: View {
                 }
                 .presentationDetents([.medium, .large])
             }
+            .sheet(
+                item: $store.scope(
+                    state: \.destination?.share,
+                    action: \.destination.share
+                )
+            ) { store in
+                NavigationStack {
+                    ShareFeatureView(store: store)
+                }
+                .presentationDetents([.medium, .large])
+            }
             .toolbar {
                 ToolbarItemGroup(placement: .navigation) {
                     Button {
@@ -334,6 +372,11 @@ public struct LogsFeatureView: View {
                         Label("Refresh", systemImage: "arrow.clockwise")
                     }
                     Spacer()
+                    Button {
+                        store.send(.tappedShareButton)
+                    } label: {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }
                 }
             }
             .navigationTitle("Logs")

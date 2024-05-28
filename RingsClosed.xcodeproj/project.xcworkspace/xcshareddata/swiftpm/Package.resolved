@@ -1,5 +1,5 @@
 {
-  "originHash" : "637f56eadfbf45138c2a431cd078ccf9877f4c400466a3ffab28a202e8e7b7dd",
+  "originHash" : "336ddf08f733c35aeff90f6671239120191488156851af882233f028f93fd25f",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CheekyGhost-Labs/OSLogClient",
       "state" : {
-        "revision" : "b198d904c55897698922b62ff9efeb7801d550b0",
-        "version" : "0.4.0"
+        "revision" : "eea19f2b4f1e12e0b97fa6bb1b31bad66a4ad9f8",
+        "version" : "0.5.0"
       }
     },
     {

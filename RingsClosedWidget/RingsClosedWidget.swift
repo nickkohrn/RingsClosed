@@ -60,10 +60,10 @@ struct RingsClosedWidgetEntryView : View {
             Text("Emoji:")
             Text(entry.emoji)
         }
-        .onAppear {
+        .task {
             do {
                 try loggingClient.configure()
-                loggingClient.registerDriver(driver: Provider.logDriver)
+                await loggingClient.registerDriver(driver: Provider.logDriver)
                 loggingClient.startPolling()
             } catch {
                 print(error)

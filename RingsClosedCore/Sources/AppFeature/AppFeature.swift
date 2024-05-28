@@ -62,13 +62,15 @@ public struct AppFeature {
                     do {
                         try loggingClient.configure()
                         Self.logger.debug("Configured logging")
-                        loggingClient.registerDriver(Self.logDriver)
-                        loggingClient.startPolling()
-                        Self.logger.debug("Registered \(PersistentLogDriver.self, privacy: .public)")
+                        return .run { _ in
+                            await loggingClient.registerDriver(Self.logDriver)
+                            Self.logger.debug("Registered \(PersistentLogDriver.self, privacy: .public)")
+                            loggingClient.startPolling()
+                        }
                     } catch {
                         Self.logger.error("Failed to configure logging: \(error, privacy: .public)")
+                        return .none
                     }
-                    return .none
 
                 case .appDelegate:
                     return .none

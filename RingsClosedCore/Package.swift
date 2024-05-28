@@ -42,7 +42,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/CheekyGhost-Labs/OSLogClient.git",
-            from: "0.4.0"
+            from: "0.5.0"
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-composable-architecture.git",
@@ -50,7 +50,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-dependencies.git",
-            from: "1.2.0"
+            from: "1.3.0"
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-tagged.git",
@@ -108,6 +108,7 @@ let package = Package(
             dependencies: [
                 "DesignSystem",
                 "LoggingClient",
+                "ShareFeature",
                 .product(
                     name: "Algorithms",
                     package: "swift-algorithms"

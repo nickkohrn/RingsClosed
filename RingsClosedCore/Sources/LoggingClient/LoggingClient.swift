@@ -10,7 +10,7 @@ public struct LoggingClient {
     public var deleteAllLogs: @Sendable () throws -> Void
     public var fetchLogs: @Sendable (_ predicate: Predicate<LoggingEntry>?, _ sortDescriptors: [SortDescriptor<LoggingEntry>]) throws -> [LoggingEntry]
     public var pollImmediately: @Sendable () -> Void
-    public var registerDriver: @Sendable (_ driver: LogDriver) -> Void
+    public var registerDriver: @Sendable (_ driver: LogDriver) async -> Void
     public var startPolling: @Sendable () -> Void
 }
 
@@ -38,9 +38,9 @@ extension LoggingClient: DependencyKey {
                 OSLogClient.pollImmediately()
             },
             registerDriver: { driver in
-//                if !OSLogClient.isDriverRegistered(withId: driver.id) {
+                if await !OSLogClient.isDriverRegistered(withId: driver.id) {
                     OSLogClient.registerDriver(driver)
-//                }
+                }
             },
             startPolling: {
                 OSLogClient.startPolling()
