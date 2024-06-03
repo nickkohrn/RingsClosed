@@ -469,6 +469,8 @@
 				DEVELOPMENT_TEAM = K6D967URM5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Access to your Apple Health data will allow your activity streaks to be calculated.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Access to your Apple Health data will allow your activity streaks to be calculated.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -482,6 +484,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryankohrn.RingsClosed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -500,6 +503,8 @@
 				DEVELOPMENT_TEAM = K6D967URM5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Access to your Apple Health data will allow your activity streaks to be calculated.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Access to your Apple Health data will allow your activity streaks to be calculated.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -513,6 +518,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryankohrn.RingsClosed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

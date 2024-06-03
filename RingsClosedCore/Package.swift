@@ -5,9 +5,7 @@ import PackageDescription
 let package = Package(
     name: "RingsClosedCore",
     platforms: [
-        .iOS(
-            .v17
-        ),
+        .iOS(.v17),
     ],
     products: [
         .library(
@@ -23,12 +21,20 @@ let package = Package(
             targets: ["DesignSystem"]
         ),
         .library(
+            name: "HealthClient",
+            targets: ["HealthClient"]
+        ),
+        .library(
             name: "LoggingClient",
             targets: ["LoggingClient"]
         ),
         .library(
             name: "LogsFeature",
             targets: ["LogsFeature"]
+        ),
+        .library(
+            name: "Models",
+            targets: ["Models"]
         ),
         .library(
             name: "ShareFeature",
@@ -62,8 +68,10 @@ let package = Package(
             name: "AppFeature",
             dependencies: [
                 "AppDelegateFeature",
+                "HealthClient",
                 "LoggingClient",
                 "LogsFeature",
+                "Models",
                 .product(
                     name: "ComposableArchitecture",
                     package: "swift-composable-architecture"
@@ -81,6 +89,19 @@ let package = Package(
         ),
         .target(
             name: "DesignSystem"
+        ),
+        .target(
+            name: "HealthClient",
+            dependencies: [
+                .product(
+                    name: "Dependencies",
+                    package: "swift-dependencies"
+                ),
+                .product(
+                    name: "DependenciesMacros",
+                    package: "swift-dependencies"
+                ),
+            ]
         ),
         .target(
             name: "LoggingClient",
@@ -120,6 +141,29 @@ let package = Package(
                 .product(
                     name: "Tagged",
                     package: "swift-tagged"
+                ),
+            ]
+        ),
+        .target(
+            name: "Models",
+            dependencies: [
+                .product(
+                    name: "Algorithms",
+                    package: "swift-algorithms"
+                ),
+                .product(
+                    name: "Dependencies",
+                    package: "swift-dependencies"
+                ),
+            ]
+        ),
+        .testTarget(
+            name: "ModelsTests",
+            dependencies: [
+                "Models",
+                .product(
+                    name: "Dependencies",
+                    package: "swift-dependencies"
                 ),
             ]
         ),
