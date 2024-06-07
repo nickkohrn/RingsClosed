@@ -469,6 +469,7 @@
 				DEVELOPMENT_TEAM = K6D967URM5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Rings Closed";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Access to your Apple Health data will allow your activity streaks to be calculated.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Access to your Apple Health data will allow your activity streaks to be calculated.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -503,6 +504,7 @@
 				DEVELOPMENT_TEAM = K6D967URM5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Rings Closed";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Access to your Apple Health data will allow your activity streaks to be calculated.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Access to your Apple Health data will allow your activity streaks to be calculated.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

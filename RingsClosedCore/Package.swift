@@ -17,6 +17,10 @@ let package = Package(
             targets: ["AppDelegateFeature"]
         ),
         .library(
+            name: "BundleClient",
+            targets: ["BundleClient"]
+        ),
+        .library(
             name: "DesignSystem",
             targets: ["DesignSystem"]
         ),
@@ -35,6 +39,14 @@ let package = Package(
         .library(
             name: "Models",
             targets: ["Models"]
+        ),
+        .library(
+            name: "OnboardingFeature",
+            targets: ["OnboardingFeature"]
+        ),
+        .library(
+            name: "SharedSettings",
+            targets: ["SharedSettings"]
         ),
         .library(
             name: "ShareFeature",
@@ -68,10 +80,13 @@ let package = Package(
             name: "AppFeature",
             dependencies: [
                 "AppDelegateFeature",
+                "BundleClient",
                 "HealthClient",
                 "LoggingClient",
                 "LogsFeature",
                 "Models",
+                "OnboardingFeature",
+                "SharedSettings",
                 .product(
                     name: "ComposableArchitecture",
                     package: "swift-composable-architecture"
@@ -84,6 +99,19 @@ let package = Package(
                 .product(
                     name: "ComposableArchitecture",
                     package: "swift-composable-architecture"
+                ),
+            ]
+        ),
+        .target(
+            name: "BundleClient",
+            dependencies: [
+                .product(
+                    name: "Dependencies",
+                    package: "swift-dependencies"
+                ),
+                .product(
+                    name: "DependenciesMacros",
+                    package: "swift-dependencies"
                 ),
             ]
         ),
@@ -164,6 +192,26 @@ let package = Package(
                 .product(
                     name: "Dependencies",
                     package: "swift-dependencies"
+                ),
+            ]
+        ),
+        .target(
+            name: "OnboardingFeature",
+            dependencies: [
+                "DesignSystem",
+                "SharedSettings",
+                .product(
+                    name: "ComposableArchitecture",
+                    package: "swift-composable-architecture"
+                ),
+            ]
+        ),
+        .target(
+            name: "SharedSettings",
+            dependencies: [
+                .product(
+                    name: "ComposableArchitecture",
+                    package: "swift-composable-architecture"
                 ),
             ]
         ),
