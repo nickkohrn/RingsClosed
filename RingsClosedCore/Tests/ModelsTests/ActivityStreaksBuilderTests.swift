@@ -100,7 +100,7 @@ internal final class ActivityStreaksBuilderTests: XCTestCase {
             dependencies.date = .constant(.now)
         } operation: {
             @Dependency(\.date.now) var now
-            let streaks = ActivityStreaksBuilder.streaks(from: [], today: now)
+            let streaks = ActivityStreaksBuilder.streaks(for: [.exercise], summaries: [], today: now)
             XCTAssertTrue(streaks.exercise.isEmpty)
             XCTAssertTrue(streaks.move.isEmpty)
             XCTAssertTrue(streaks.stand.isEmpty)
@@ -126,9 +126,103 @@ internal final class ActivityStreaksBuilderTests: XCTestCase {
             standSummary.appleStandHours = .init(unit: .count(), doubleValue: 1)
             standSummary.standHoursGoal = .init(unit: .count(), doubleValue: 1)
             
-            let streaks = ActivityStreaksBuilder.streaks(from: [exerciseSummary, moveSummary, standSummary], today: now)
+            let streaks = ActivityStreaksBuilder.streaks(
+                for: [.exercise, .move, .stand],
+                summaries: [exerciseSummary, moveSummary, standSummary],
+                today: now
+            )
             XCTAssertEqual(streaks.exercise.count, 1)
             XCTAssertEqual(streaks.move.count, 1)
+            XCTAssertEqual(streaks.stand.count, 1)
+        }
+    }
+
+    internal func test_returnsStreaksWithExercise_whenActivityStreaksOptionsExercise() {
+        withDependencies { dependencies in
+            dependencies.calendar = .current
+            dependencies.date = .constant(.now)
+        } operation: {
+            @Dependency(\.date.now) var now
+
+            let exerciseSummary = HKActivitySummary()
+            exerciseSummary.appleExerciseTime = .init(unit: .minute(), doubleValue: 1)
+            exerciseSummary.exerciseTimeGoal = .init(unit: .minute(), doubleValue: 1)
+
+            let moveSummary = HKActivitySummary()
+            moveSummary.activeEnergyBurned = .init(unit: .kilocalorie(), doubleValue: 1)
+            moveSummary.activeEnergyBurnedGoal = .init(unit: .kilocalorie(), doubleValue: 1)
+
+            let standSummary = HKActivitySummary()
+            standSummary.appleStandHours = .init(unit: .count(), doubleValue: 1)
+            standSummary.standHoursGoal = .init(unit: .count(), doubleValue: 1)
+            
+            let streaks = ActivityStreaksBuilder.streaks(
+                for: .exercise,
+                summaries: [exerciseSummary, moveSummary, standSummary],
+                today: now
+            )
+            XCTAssertEqual(streaks.exercise.count, 1)
+            XCTAssertTrue(streaks.move.isEmpty)
+            XCTAssertTrue(streaks.stand.isEmpty)
+        }
+    }
+
+    internal func test_returnsStreaksWithMove_whenActivityStreaksOptionsMove() {
+        withDependencies { dependencies in
+            dependencies.calendar = .current
+            dependencies.date = .constant(.now)
+        } operation: {
+            @Dependency(\.date.now) var now
+
+            let exerciseSummary = HKActivitySummary()
+            exerciseSummary.appleExerciseTime = .init(unit: .minute(), doubleValue: 1)
+            exerciseSummary.exerciseTimeGoal = .init(unit: .minute(), doubleValue: 1)
+
+            let moveSummary = HKActivitySummary()
+            moveSummary.activeEnergyBurned = .init(unit: .kilocalorie(), doubleValue: 1)
+            moveSummary.activeEnergyBurnedGoal = .init(unit: .kilocalorie(), doubleValue: 1)
+
+            let standSummary = HKActivitySummary()
+            standSummary.appleStandHours = .init(unit: .count(), doubleValue: 1)
+            standSummary.standHoursGoal = .init(unit: .count(), doubleValue: 1)
+            
+            let streaks = ActivityStreaksBuilder.streaks(
+                for: .move,
+                summaries: [exerciseSummary, moveSummary, standSummary],
+                today: now
+            )
+            XCTAssertTrue(streaks.exercise.isEmpty)
+            XCTAssertEqual(streaks.move.count, 1)
+            XCTAssertTrue(streaks.stand.isEmpty)
+        }
+    }
+
+    internal func test_returnsStreaksWithStand_whenActivityStreaksOptionsStand() {
+        withDependencies { dependencies in
+            dependencies.calendar = .current
+            dependencies.date = .constant(.now)
+        } operation: {
+            @Dependency(\.date.now) var now
+
+            let exerciseSummary = HKActivitySummary()
+            exerciseSummary.appleExerciseTime = .init(unit: .minute(), doubleValue: 1)
+            exerciseSummary.exerciseTimeGoal = .init(unit: .minute(), doubleValue: 1)
+
+            let moveSummary = HKActivitySummary()
+            moveSummary.activeEnergyBurned = .init(unit: .kilocalorie(), doubleValue: 1)
+            moveSummary.activeEnergyBurnedGoal = .init(unit: .kilocalorie(), doubleValue: 1)
+
+            let standSummary = HKActivitySummary()
+            standSummary.appleStandHours = .init(unit: .count(), doubleValue: 1)
+            standSummary.standHoursGoal = .init(unit: .count(), doubleValue: 1)
+            
+            let streaks = ActivityStreaksBuilder.streaks(
+                for: .stand,
+                summaries: [exerciseSummary, moveSummary, standSummary],
+                today: now
+            )
+            XCTAssertTrue(streaks.exercise.isEmpty)
+            XCTAssertTrue(streaks.move.isEmpty)
             XCTAssertEqual(streaks.stand.count, 1)
         }
     }
