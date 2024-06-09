@@ -2,7 +2,6 @@ import AppDelegateFeature
 import BundleClient
 import ComposableArchitecture
 import Dependencies
-import HealthAuthorizationFeature
 import HealthClient
 import HealthKit
 import LoggingClient
@@ -10,6 +9,7 @@ import Models
 import OnboardingFeature
 import OSLog
 import SharedSettings
+import StreaksFeature
 import SwiftUI
 #if DEBUG
 import LogsFeature
@@ -46,6 +46,11 @@ public struct AppFeature {
         @Shared(.appDisplayName) public var appDisplayName
         @Presents public var destination: Destination.State?
         @Shared(.hasSeenOnboarding) public var hasSeenOnboarding
+        public var streaks = StreaksFeature.State()
+        public let typesToRead: Set<HKObjectType> = [
+            HKCharacteristicType(.wheelchairUse),
+            .activitySummaryType()
+        ]
         @Shared(.usesWheelchair) public var usesWheelchair
 
         public init() {}
@@ -55,7 +60,9 @@ public struct AppFeature {
         case appDelegate(AppDelegateFeature.Action)
         case destination(PresentationAction<Destination.Action>)
         case onAppear
+        case receivedAuthorizationRequestStatus(HKAuthorizationRequestStatus)
         case scenePhaseDidChange(ScenePhase)
+        case streaks(StreaksFeature.Action)
 #if DEBUG
         case tappedLogsButton
 #endif
@@ -66,6 +73,10 @@ public struct AppFeature {
     public var body: some ReducerOf<Self> {
         Scope(state: \.appDelegate, action: /Action.appDelegate) {
             AppDelegateFeature()
+        }
+
+        Scope(state: \.streaks, action: /Action.streaks) {
+            StreaksFeature()
         }
 
         Reduce { state, action in
@@ -106,7 +117,9 @@ public struct AppFeature {
                     } catch {
                         Self.logger.error("Failed to determine wheelchair use: \(error, privacy: .public)")
                     }
-                    return .none
+                    return StreaksFeature()
+                        .reduce(into: &state.streaks, action: .calculateStreaks)
+                        .map(Action.streaks)
 
                 case .destination:
                     return .none
@@ -118,48 +131,51 @@ public struct AppFeature {
                         state.destination = .onboarding(OnboardingFeature.State())
                         return .none
                     } else {
-                        return .none
+                        return .run { [typesToRead = state.typesToRead] send in
+                            let authorizationStatus = try await healthClient.statusForAuthorizationRequest(toRead: typesToRead)
+                            await send(.receivedAuthorizationRequestStatus(authorizationStatus))
+                        } catch: { error, send in
+                            // TODO: Handle error
+                            Self.logger.error("Error getting status for authorization request: \(error, privacy: .public)")
+                        }
                     }
-//                    let isHealthDataAvailable = healthClient.isHealthDataAvailable()
-//                    Self.logger.info("Health data is available: \(isHealthDataAvailable, privacy: .public)")
-//                    if isHealthDataAvailable {
-//                        return .run { send in
-//                            let toRead: Set<HKObjectType> = [HKObjectType.activitySummaryType()]
-//                            let authorizationStatus = try await healthClient.statusForAuthorizationRequest(toRead: toRead)
-//                            switch authorizationStatus {
-//                                case .unnecessary:
-//                                    Self.logger.info("Health authorization request status: unnecessary")
-//                                    Self.logger.info("Calculating streaks")
-//                                    let summaries = try await healthClient.activitySummaries()
-//                                    @Dependency(\.date.now) var now
-//                                    let streaks = ActivityStreaksBuilder.streaks(from: summaries, today: now)
-//                                    print("EXERCISE:", streaks.exercise.first(where: \.isCurrentStreak)?.summaries.count ?? 0)
-//                                    print("MOVE:", streaks.move.first(where: \.isCurrentStreak)?.summaries.count ?? 0)
-//                                    print("STAND:", streaks.stand.first(where: \.isCurrentStreak)?.summaries.count ?? 0)
-//                                case .unknown:
-//                                    Self.logger.info("Health authorization request status: unknown")
-//                                    Self.logger.info("Requesting Health authorization")
-//                                    try await healthClient.requestAuthorization(toRead: toRead)
-//                                case .shouldRequest:
-//                                    Self.logger.info("Health authorization request status: should request")
-//                                    Self.logger.info("Requesting Health authorization")
-//                                    try await healthClient.requestAuthorization(toRead: toRead)
-//                                @unknown default:
-//                                    Self.logger.info("Health authorization request status: unexpected (\(String(describing: authorizationStatus), privacy: .public)")
-//                            }
-//                        } catch: { error, send in
-//                            // TODO: Handle error
-//                            Self.logger.error("Error: \(error, privacy: .public)")
-//                        }
-//                    } else {
-//                        return .none
-//                    }
+
+                case let .receivedAuthorizationRequestStatus(status):
+                    switch status {
+                        case .unnecessary:
+                            Self.logger.info("Health authorization request status: unnecessary")
+                            return StreaksFeature()
+                                .reduce(into: &state.streaks, action: .calculateStreaks)
+                                .map(Action.streaks)
+                        case .unknown:
+                            Self.logger.info("Health authorization request status: unknown")
+                            Self.logger.fault("Authorization should have been requested during onboarding")
+                        case .shouldRequest:
+                            Self.logger.info("Health authorization request status: should request")
+                            Self.logger.fault("Authorization should have been requested during onboarding")
+                        @unknown default:
+                            Self.logger.info("Health authorization request status: unexpected (\(String(describing: status), privacy: .public)")
+                    }
+                    return .none
 
                 case let .scenePhaseDidChange(phase):
-                    if phase == .inactive {
-                        Self.logger.debug("Scene phase changed to `\(String(describing: phase), privacy: .public)`; polling immediately")
-                        loggingClient.pollImmediately()
+                    switch phase {
+                        case .active:
+                            return StreaksFeature()
+                                .reduce(into: &state.streaks, action: .calculateStreaks)
+                                .map(Action.streaks)
+                        case .inactive:
+                            Self.logger.debug("Scene phase changed to `\(String(describing: phase), privacy: .public)`; polling immediately")
+                            loggingClient.pollImmediately()
+                            return .none
+                        case .background:
+                            return .none
+                        @unknown default:
+                            Self.logger.fault("Unhandled scene phase: \(String(describing: phase), privacy: .public)")
+                            return .none
                     }
+
+                case .streaks:
                     return .none
 
                 case .tappedLogsButton:
@@ -182,42 +198,47 @@ public struct AppFeatureView: View {
 
     public var body: some View {
         NavigationStack {
-            Text("AppFeature")
-                .onChange(of: scenePhase) { _, new in
-                    store.send(.scenePhaseDidChange(new))
+            StreaksFeatureView(
+                store: store.scope(
+                    state: \.streaks,
+                    action: \.streaks
+                )
+            )
+            .onChange(of: scenePhase) { _, new in
+                store.send(.scenePhaseDidChange(new))
+            }
+            .fullScreenCover(
+                item: $store.scope(
+                    state: \.destination?.onboarding,
+                    action: \.destination.onboarding
+                )
+            ) { store in
+                OnboardingFeatureView(store: store)
+            }
+            .sheet(
+                item: $store.scope(
+                    state: \.destination?.logs,
+                    action: \.destination.logs
+                )
+            ) { store in
+                NavigationStack {
+                    LogsFeatureView(store: store)
                 }
-                .fullScreenCover(
-                    item: $store.scope(
-                        state: \.destination?.onboarding,
-                        action: \.destination.onboarding
-                    )
-                ) { store in
-                    OnboardingFeatureView(store: store)
-                }
-                .sheet(
-                    item: $store.scope(
-                        state: \.destination?.logs,
-                        action: \.destination.logs
-                    )
-                ) { store in
-                    NavigationStack {
-                        LogsFeatureView(store: store)
-                    }
-                }
-                .toolbar {
+            }
+            .toolbar {
 #if DEBUG
-                    Button {
-                        store.send(.tappedLogsButton)
-                    } label: {
-                        Label {
-                            Text("Logs")
-                        } icon: {
-                            Image(systemName: "doc.plaintext")
-                        }
-                    }
+//                Button {
+//                    store.send(.tappedLogsButton)
+//                } label: {
+//                    Label {
+//                        Text("Logs")
+//                    } icon: {
+//                        Image(systemName: "doc.plaintext")
+//                    }
+//                }
 #endif
-                }
-                .onAppear { store.send(.onAppear) }
+            }
+            .onAppear { store.send(.onAppear) }
         }
     }
 }

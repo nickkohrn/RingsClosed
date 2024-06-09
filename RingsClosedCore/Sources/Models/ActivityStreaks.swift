@@ -19,9 +19,9 @@ public struct ActivityStreaks: Equatable {
     ///   - move: An array of activity streaks for movement.
     ///   - stand: An array of activity streaks for standing.
     public init(
-        exercise: [ActivityStreak],
-        move: [ActivityStreak],
-        stand: [ActivityStreak]
+        exercise: [ActivityStreak] = [],
+        move: [ActivityStreak] = [],
+        stand: [ActivityStreak] = []
     ) {
         self.exercise = exercise
         self.move = move

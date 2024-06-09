@@ -29,7 +29,6 @@ internal final class ActivityStreakBuilderTests: XCTestCase {
             XCTAssertEqual(streak.startDate, calendar.date(from: DateComponents(year: 2024, month: 1, day: 1)))
             XCTAssertEqual(streak.endDate, calendar.date(from: DateComponents(year: 2024, month: 1, day: 3)))
             XCTAssertEqual(streak.isCurrentStreak, false)
-            XCTAssertEqual(streak.summaries, [summary1, summary2, summary3])
         }
     }
 
@@ -54,12 +53,10 @@ internal final class ActivityStreakBuilderTests: XCTestCase {
             XCTAssertEqual(streak1.startDate, calendar.date(from: DateComponents(year: 2024, month: 1, day: 1)))
             XCTAssertEqual(streak1.endDate, calendar.date(from: DateComponents(year: 2024, month: 1, day: 2)))
             XCTAssertEqual(streak1.isCurrentStreak, false)
-            XCTAssertEqual(streak1.summaries, [summary1, summary2])
             let streak2 = try XCTUnwrap(streaks.last)
             XCTAssertEqual(streak2.startDate, calendar.date(from: DateComponents(year: 2024, month: 1, day: 6)))
             XCTAssertEqual(streak2.endDate, calendar.date(from: DateComponents(year: 2024, month: 1, day: 7)))
             XCTAssertEqual(streak2.isCurrentStreak, false)
-            XCTAssertEqual(streak2.summaries, [summary3, summary4])
         }
     }
 

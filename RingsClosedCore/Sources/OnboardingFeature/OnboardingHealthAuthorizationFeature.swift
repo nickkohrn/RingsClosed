@@ -48,7 +48,7 @@ public struct OnboardingHealthAuthorizationFeatureView: View {
     private var content: some View {
         VStack {
             VStack(alignment: .leading) {
-                Image.appleHealthIcon
+                Image.Icon.appleHealthIcon
                     .resizable()
                     .frame(width: 60, height: 60)
                 Text("Works With")

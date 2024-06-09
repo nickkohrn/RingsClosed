@@ -52,6 +52,10 @@ let package = Package(
             name: "ShareFeature",
             targets: ["ShareFeature"]
         ),
+        .library(
+            name: "StreaksFeature",
+            targets: ["StreaksFeature"]
+        ),
     ],
     dependencies: [
         .package(
@@ -87,6 +91,7 @@ let package = Package(
                 "Models",
                 "OnboardingFeature",
                 "SharedSettings",
+                "StreaksFeature",
                 .product(
                     name: "ComposableArchitecture",
                     package: "swift-composable-architecture"
@@ -218,6 +223,18 @@ let package = Package(
         .target(
             name: "ShareFeature",
             dependencies: [
+                .product(
+                    name: "ComposableArchitecture",
+                    package: "swift-composable-architecture"
+                ),
+            ]
+        ),
+        .target(
+            name: "StreaksFeature",
+            dependencies: [
+                "DesignSystem",
+                "HealthClient",
+                "Models",
                 .product(
                     name: "ComposableArchitecture",
                     package: "swift-composable-architecture"

@@ -9,7 +9,6 @@ struct RingsClosedApp: App {
     var body: some Scene {
         WindowGroup {
             AppFeatureView(store: appDelegate.store)
-                .preferredColorScheme(.dark)
         }
     }
 }
