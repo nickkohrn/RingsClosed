@@ -2,6 +2,7 @@ import AppDelegateFeature
 import BundleClient
 import ComposableArchitecture
 import Dependencies
+import HealthAuthorizationFeature
 import HealthClient
 import HealthKit
 import LoggingClient
@@ -45,6 +46,7 @@ public struct AppFeature {
         @Shared(.appDisplayName) public var appDisplayName
         @Presents public var destination: Destination.State?
         @Shared(.hasSeenOnboarding) public var hasSeenOnboarding
+        @Shared(.usesWheelchair) public var usesWheelchair
 
         public init() {}
     }
@@ -96,6 +98,14 @@ public struct AppFeature {
                     Self.logger.debug("Dismissing onboarding")
                     state.hasSeenOnboarding = true
                     state.destination = nil
+                    do {
+                        Self.logger.debug("Fetching wheelchair use")
+                        let usesWheelchair = try healthClient.wheelchairUse() == .yes
+                        Self.logger.info("Uses wheelchair: \(usesWheelchair, privacy: .private)")
+                        state.usesWheelchair = usesWheelchair
+                    } catch {
+                        Self.logger.error("Failed to determine wheelchair use: \(error, privacy: .public)")
+                    }
                     return .none
 
                 case .destination:
@@ -182,9 +192,7 @@ public struct AppFeatureView: View {
                         action: \.destination.onboarding
                     )
                 ) { store in
-                    NavigationStack {
-                        OnboardingFeatureView(store: store)
-                    }
+                    OnboardingFeatureView(store: store)
                 }
                 .sheet(
                     item: $store.scope(

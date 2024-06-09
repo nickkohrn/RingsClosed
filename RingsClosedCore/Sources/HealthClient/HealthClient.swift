@@ -10,6 +10,7 @@ public struct HealthClient: Sendable {
     public var isHealthDataAvailable: @Sendable () -> Bool = { false }
     public var requestAuthorization: @Sendable (_ toRead: Set<HKObjectType>) async throws -> Void
     public var statusForAuthorizationRequest: @Sendable (_ toRead: Set<HKObjectType>) async throws -> HKAuthorizationRequestStatus
+    public var wheelchairUse: @Sendable () throws -> HKWheelchairUse
 }
 
 extension HealthClient: DependencyKey {
@@ -36,6 +37,9 @@ extension HealthClient: DependencyKey {
             },
             statusForAuthorizationRequest: { toRead in
                 try await store.statusForAuthorizationRequest(toShare: [], read: toRead)
+            }, 
+            wheelchairUse: {
+                try store.wheelchairUse().wheelchairUse
             }
         )
     }
